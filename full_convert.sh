@@ -16,6 +16,9 @@ echo "Access to $TRANSXCHANGE_LOGIN:$TRANSXCHANGE_PASSWORD@ftp://$HOST:$PORT"
 mkdir -p $(pwd)/data
 wget -r --user=$TRANSXCHANGE_LOGIN --password=$TRANSXCHANGE_PASSWORD ftp://$HOST -P $(pwd)/data/
 
+if [ ! -f TransXChange2GTFS_2/NaptanStops.csv ]; then
+   pushd TransXChange2GTFS_2 && unzip NaptanStops_unzipthis.zip && popd
+fi
 docker build -t transxchange2gtfs .
 for file in `ls data/$HOST`; do
     if [ ${file: -4} == ".zip" ]; then
