@@ -52,6 +52,7 @@ namespace TransXChange2GTFS_2
             TextReader textReader = File.OpenText("NaptanStops.csv");
             CsvReader csvReader = new CsvReader(textReader);
             csvReader.Configuration.Delimiter = ",";
+            csvReader.Configuration.BadDataFound = null;
             NaptanStops = csvReader.GetRecords<NaptanStop>().ToList();
 
             foreach (string filePath in Directory.EnumerateFiles(@"input", "*.xml"))

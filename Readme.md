@@ -37,3 +37,10 @@ An example of GTFS output from the tool is contained within yorkshireGTFS.zip. T
 MIT license. Use it for whatever you like. Attribution to ODILeeds, Thomas Forth, and Daniel Billingsley. Copyright Thomas Forth and Daniel Billingsley.
 Example TransXChange files are from the Traveline National Dataset and are used under the [Open Government License v3](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
 The Stops.txt is from NaPTAN and is used under the [Open Government License v3](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+
+## Run with docker 
+
+```
+docker build -t transxchange2gtfs .
+docker run --rm -v [your_local_input_dir]:input -v [your_output_dir]:output transxchange2gtfs
+```
