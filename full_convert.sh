@@ -12,23 +12,27 @@ fi
 HOST=ftp.tnds.basemap.co.uk
 PORT=21
 
-echo "Access to $TRANSXCHANGE_LOGIN:$TRANSXCHANGE_PASSWORD@ftp://$HOST:$PORT"
-mkdir -p $(pwd)/data
-wget -r --user=$TRANSXCHANGE_LOGIN --password=$TRANSXCHANGE_PASSWORD ftp://$HOST -P $(pwd)/data/
+if [[ ! -d "$(pwd)/data" ]]; then
+    echo "Access to $TRANSXCHANGE_LOGIN:$TRANSXCHANGE_PASSWORD@ftp://$HOST:$PORT"
+    mkdir -p $(pwd)/data
+    wget -r --user=$TRANSXCHANGE_LOGIN --password=$TRANSXCHANGE_PASSWORD ftp://$HOST -P $(pwd)/data/
+fi
 
-if [ ! -f TransXChange2GTFS_2/NaptanStops.csv ]; then
+if [[ ! -f TransXChange2GTFS_2/NaptanStops.csv ]]; then
    pushd TransXChange2GTFS_2 && unzip NaptanStops_unzipthis.zip && popd
 fi
 docker build -t transxchange2gtfs .
 for file in `ls data/$HOST`; do
-    if [ ${file: -4} == ".zip" ]; then
+    if [[ ${file: -4} == ".zip" ]]; then
         INPUT=data/$HOST/${file}_input
         OUTPUT=data/GTFS/${file}_output
-        rm -rf $INPUT/*
-        echo "convert $file"
-        unzip data/$HOST/$file -d $INPUT
-        mkdir -p $OUTPUT
-        rm -rf $OUTPUT/*
-        docker run --rm -v "$(pwd)/${INPUT}:/srv/input" -v "$(pwd)/${OUTPUT}:/srv/output" transxchange2gtfs
+        if [[ $(ls $OUTPUT | wc -l) == 0 ]]; then
+            rm -rf $INPUT/*
+            echo "convert $file"
+            unzip data/$HOST/$file -d $INPUT
+            mkdir -p $OUTPUT
+            rm -rf $OUTPUT/*
+            docker run --rm -v "$(pwd)/${INPUT}:/srv/input" -v "$(pwd)/${OUTPUT}:/srv/output" transxchange2gtfs
+        fi
     fi
 done
