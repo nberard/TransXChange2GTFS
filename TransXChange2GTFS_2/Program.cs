@@ -97,7 +97,7 @@ namespace TransXChange2GTFS_2
                 string journeyPatternRef = VehicleJourney.JourneyPatternRef;
 
 		// skip if HolidaysOnly (TODO)
-                if(VehicleJourney.OperatingProfile.RegularDayType.HolidaysOnly != null) {
+                if(VehicleJourney.OperatingProfile != null && VehicleJourney.OperatingProfile.RegularDayType.HolidaysOnly != null) {
 		    Console.Error.WriteLine("skip: " + journeyPatternRef);
 		    continue;
 		}
@@ -210,7 +210,7 @@ namespace TransXChange2GTFS_2
 
                     string startingDate = _txObject.Services.Service.OperatingPeriod.StartDate.ToString("yyyyMMdd");
                     string finishingDate = _txObject.Services.Service.OperatingPeriod.EndDate.ToString("yyyyMMdd");
-		    
+
 		    // set to default open ended end date
 		    if(finishingDate.Equals("00010101")) {
 			finishingDate = DEFAULT_END_DATE;
