@@ -32,7 +32,7 @@ for file in `ls data/$HOST`; do
             unzip data/$HOST/$file -d $INPUT
             mkdir -p $OUTPUT
             rm -rf $OUTPUT/*
-            docker run --rm -v "$(pwd)/${INPUT}:/srv/input" -v "$(pwd)/${OUTPUT}:/srv/output" transxchange2gtfs
+            docker run --rm -v "$(pwd)/${INPUT}:/srv/input" -v "$(pwd)/${OUTPUT}:/srv/output" transxchange2gtfs > $OUTPUT/log.txt 2>&1
         fi
     fi
 done
