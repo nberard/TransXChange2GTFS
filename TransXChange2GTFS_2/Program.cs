@@ -359,7 +359,10 @@ namespace TransXChange2GTFS_2
 		    processedRoutes.Add(routeId);
 		    Route route = new Route();
 		    route.route_short_name = _txObject.Services.Service.Lines.Line.LineName;
-		    route.route_long_name = _txObject.Services.Service.Description.Trim();
+		    if (_txObject.Services.Service.Description != null)
+		        route.route_long_name = _txObject.Services.Service.Description.Trim();
+		    else
+		        route.route_long_name = route.route_short_name;
 		    route.route_id = routeId;
 		    route.agency_id = operatorDetails.NationalOperatorCode;
 		    route.route_color = null;
