@@ -670,8 +670,8 @@ namespace TransXChange2GTFS_2
         public string stop_id { get; set; }
         public string stop_code { get; set; }
         public string stop_name { get; set; }
-        public double stop_lat { get; set; }
-        public double stop_lon { get; set; }
+        public string stop_lat { get; set; }
+        public string stop_lon { get; set; }
         public string stop_url { get; set; }
         //public string vehicle_type { get; set; }
     }
@@ -681,8 +681,8 @@ namespace TransXChange2GTFS_2
         public string ATCOCode { get; set; }
         public string NaptanCode { get; set; }
         public string CommonName { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     }
 
 // A LIST OF THESE ROUTES CREATES THE GTFS routes.txt file.
