@@ -346,9 +346,30 @@ namespace TransXChange2GTFS_2
                 // Adding a new route
                 // Calculate mode
                 string mode = null;
-                if (_txObject.Services.Service.Mode == "bus")
+//                mode = "bus" or "coach", then "route_type" = 3
+//                mode = "underground" or "overground", then "route_type" = 1
+//                mode = "tram", then "route_type" = 0
+//                mode = "rail" or "train" or "intercity", then "route_type" = 2
+//                mode = "ferry", then "route_type" = 4
+                if (_txObject.Services.Service.Mode == "bus" || _txObject.Services.Service.Mode == "coach")
                 {
                     mode = "3"; // there are more modes, but you need to look them up.
+                }
+                else if (_txObject.Services.Service.Mode == "underground" || _txObject.Services.Service.Mode == "overground")
+                {
+                    mode = "1";
+                }
+                else if (_txObject.Services.Service.Mode == "tram")
+                {
+                    mode = "0";
+                }
+                else if (_txObject.Services.Service.Mode == "train" || _txObject.Services.Service.Mode == "rail" || _txObject.Services.Service.Mode == "intercity")
+                {
+                    mode = "2";
+                }
+                else if (_txObject.Services.Service.Mode == "ferry")
+                {
+                    mode = "4";
                 }
 
 		// avoid duplicate route entries.
