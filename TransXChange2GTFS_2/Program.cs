@@ -25,6 +25,7 @@ namespace TransXChange2GTFS_2 {
   static List < InternalRoute > InternalRoutesList = new List < InternalRoute > ();
   static List < String > routesFailingProcessing = new List < String > ();
   static List < String > routesSuccessProcessing = new List < String > ();
+  static List < String > stopIds = new List < String > ();
   static BankHolidayDates bankHolidayDates = new BankHolidayDates();
 
   // default for open ended end date
@@ -478,17 +479,19 @@ namespace TransXChange2GTFS_2 {
 
      // List of stop times
      for (var j = 0; j < InternalRoute.Stops.Count; j++) {
-       StopTime newStopTime = new StopTime();
-       newStopTime.trip_id = newTrip.trip_id; //InternalRoute.Service + "-" + internalRouteIndex;
-       newStopTime.arrival_time = InternalRoute.Times[j];
-       newStopTime.departure_time = InternalRoute.Times[j];
-       newStopTime.stop_id = InternalRoute.Stops[j];
-       newStopTime.stop_sequence = j + 1;
-       newStopTime.stop_headsign = null;
-       newStopTime.pickup_type = null;
-       newStopTime.drop_off_type = null;
-       newStopTime.shape_dist_traveled = null;
-       stopTimesList.Add(newStopTime);
+       if (stopIds.Contains(InternalRoute.Stops[j])) {
+           StopTime newStopTime = new StopTime();
+           newStopTime.trip_id = newTrip.trip_id; //InternalRoute.Service + "-" + internalRouteIndex;
+           newStopTime.arrival_time = InternalRoute.Times[j];
+           newStopTime.departure_time = InternalRoute.Times[j];
+           newStopTime.stop_id = InternalRoute.Stops[j];
+           newStopTime.stop_sequence = j + 1;
+           newStopTime.stop_headsign = null;
+           newStopTime.pickup_type = null;
+           newStopTime.drop_off_type = null;
+           newStopTime.shape_dist_traveled = null;
+           stopTimesList.Add(newStopTime);
+       }
      }
 
      // Add days with no service to exceptions
